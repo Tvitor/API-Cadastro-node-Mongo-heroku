@@ -1,23 +1,24 @@
 import express from "express";
-import User from "../model/userSchema";
+import User from "../models/userSchema";
 import bcrypt from "bcryptjs";
+
 import moment from "moment";
-import token  from "../config/tokenGenerator";
-import userMethods from "../model/userMethods";
+import token from "../models/tokenGenerator";
+import userMethods from "../models/userMethods";
 
 const router = express.Router();
 const now = moment(moment().format('YYYY-MM-DD hh:mm:ss')).toDate();
 
-router.post('/register', async(req, res)=> {
+router.post('/register', async (req, res)=> {
     const{email} = req.body;
-    
+   
     try {
-        if(await User.findOne({email}))
+        if(await userMethods.findUser({email}))
             return res.status(400).send({error: "E-mail já existente"});
         
-            let newUser = {...req.body, ...{"data_criacao": now}, ...{ "ultimo_login":now}, ...{"data_atualizacao":now}};
-            
-            let user = await userMethods.createUser(newUser);
+        let newUser = {...req.body, ...{"data_criacao": now}, ...{ "ultimo_login":now}, ...{"data_atualizacao":now}};
+        
+        let user = await userMethods.createUser(newUser);
            
         user.senha = undefined;
         user = {
@@ -30,22 +31,23 @@ router.post('/register', async(req, res)=> {
         } 
         
         return res.status(200).send(user);
-    }catch(err){
+    }catch(error){
         return res.status(400).send({error:"Falha ao registrar"})
     }
 });
 
 router.post('/login', async (req, res)=> {
     const {email, senha} = req.body;
-    
-    let user = await User.findOne({email}).select('+senha');
+    const password = true;
+
+    let user = await userMethods.findUser({email}, password);
 
     if(!user)
         return res.status(400).send({error: 'Usuário e/ou senha inválidos'});
     if(!await bcrypt.compare(senha, user.senha))
         return res.status(401).send({error: 'Usuário e/ou senha inválidos'});
 
-        await userMethods.updatelastLogin(user, now);
+    await userMethods.updatelastLogin(user, now);
 
     user = {
         "id":user._id, 

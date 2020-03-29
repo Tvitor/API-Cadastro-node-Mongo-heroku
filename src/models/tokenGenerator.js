@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
-const authConfig = require("./auth.json");
+import authConfig from "../config/auth.json";
 
 module.exports = {
-
+    
+    //Gerar Token
     tokenGenerator(params = {}) {
         return jwt.sign(params, authConfig.secret, {expiresIn: 86400});
     }
