@@ -1,10 +1,9 @@
 import jwt from "jsonwebtoken";
-import authConfig from "../config/auth.json";
 
 module.exports = {
     
     //Gerar Token
-    tokenGenerator(params = {}) {
-        return jwt.sign(params, authConfig.secret, {expiresIn: 86400});
+    tokenGenerator(params) {
+        return jwt.sign(params, process.env.SECRET, {expiresIn: 86400});
     }
 }

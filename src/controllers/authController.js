@@ -1,10 +1,10 @@
 import express from "express";
-import User from "../models/userSchema";
+import User from "../models/userschema";
 import bcrypt from "bcryptjs";
 
 import moment from "moment";
-import token from "../models/tokenGenerator";
-import userMethods from "../models/userMethods";
+import token from "../models/tokengenerator";
+import userMethods from "../models/usermethods";
 
 const router = express.Router();
 const now = moment(moment().format('YYYY-MM-DD hh:mm:ss')).toDate();
@@ -26,11 +26,12 @@ router.post('/register', async (req, res)=> {
                 "usuario":user.nome, 
                 "dataCriacao": user.data_criacao, 
                 "ultimoLogin": user.ultimo_login, 
-                "dataAtualizacao": user.data_atualizacao,
-                "token": token.tokenGenerator({id:user._id})
+                "dataAtualizacao": user.data_atualizacao
         } 
-        
-        return res.status(200).send(user);
+        return res.status(200).send({
+            user,
+            "token": token.tokenGenerator({id:user.id})
+        });
     }catch(error){
         return res.status(400).send({error:"Falha ao registrar"})
     }
@@ -54,11 +55,13 @@ router.post('/login', async (req, res)=> {
         "usuario":user.nome, 
         "dataCriacao": user.data_criacao, 
         "ultimoLogin": now, 
-        "dataAtualizacao": user.data_atualizacao,
-        "token": token.tokenGenerator({id:user._id})
+        "dataAtualizacao": user.data_atualizacao
     } 
 
-    res.send({user});
+    res.send({
+        user,
+        "token": token.tokenGenerator({id:user.id})
+    });
 })
 
 module.exports = app => app.use('/auth', router);
