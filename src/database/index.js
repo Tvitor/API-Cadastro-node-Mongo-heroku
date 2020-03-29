@@ -6,7 +6,8 @@ const server = "mongodb+srv://root:123@cluster0-jopny.mongodb.net/listUsers?retr
 mongoose.connect(server, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false 
 });
 mongoose.Promise = global.Promise;
 

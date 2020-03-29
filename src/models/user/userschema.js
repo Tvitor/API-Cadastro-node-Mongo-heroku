@@ -1,5 +1,6 @@
-import mongoose from "../database";
-import bcrypt from "bcryptjs";
+import mongoose from "../../database/index";
+
+const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 

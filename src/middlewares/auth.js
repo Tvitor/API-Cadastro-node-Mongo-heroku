@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     return res.status(401).send({error: 'Nenhum token informado'});
 
     const parts = authHeader.split(' ');
-    if(!parts.length === 2)
+    if(!(parts.length === 2))
     return res.status(401).send({error: 'token incorreto'});
 
     const [scheme, token] = parts;
