@@ -1,0 +1,5 @@
+{
+    "undef": true,  // No undefined variables
+    "unused": true, // Cannot use a variable before it's defined
+    "asi": true     // Require semicolons
+  }
