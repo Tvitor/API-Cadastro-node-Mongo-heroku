@@ -1,15 +1,16 @@
+// Methods to database
 const assert = require("assert");
 const User = require("../user/userschema");
 
 module.exports = {
     
-    //Criar usuário
+    //Create User
     async createUser(newUser) {
         const user = await User.create(newUser);
         return user;
     },
 
-    //Buscar usuário por email
+    //find User
     async findUser(email, password, id){
         if(!password){
             const result = await User.findOne(email).exec();
@@ -20,14 +21,14 @@ module.exports = {
         }
     },
 
-       //Buscar usuário por ID
+       //Find User by id
        async findUserById(id){
-        if(id)
+        
             return User.findOne({_id:id});
         
     },
 
-    //Atualizar ultima data de login
+    //update login
     updatelastLogin(data, now) {
            User.findOneAndUpdate({ultimo_login:data.ultimo_login},{ultimo_login:now}).then( () =>{
                     User.findOne({_id:data._id}).then((result) => {
@@ -38,6 +39,8 @@ module.exports = {
             });
         
     },
+
+    //Change token
     updateToken(data){
         User.updateOne(
             { _id: data.user.id },

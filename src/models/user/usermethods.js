@@ -9,38 +9,42 @@ const now = moment(moment().format('YYYY-MM-DD hh:mm:ss')).toDate();
 
 module.exports = {
     
-    //Cadastrar usuario
+    //User Register
     async userRegister(req, res) {
         const{email} = req.body;
-   
+        
         try {
-            if(await userData.findUser({email}))
-                return res.status(400).send({error: "E-mail já existente"});
-            
-            let newUser = {...req.body, ...{"data_criacao": now}, ...{ "ultimo_login":now}, ...{"data_atualizacao":now}};
-            
-            let user = await userData.createUser(newUser);
-            
-            user.senha = undefined;
+            if(email){
+                if(await userData.findUser({email}))
+                    return res.status(400).send({error: "E-mail já existente"});
+                
+                let newUser = {...req.body, ...{"data_criacao": now}, ...{ "ultimo_login":now}, ...{"data_atualizacao":now}};
+                
+                let user = await userData.createUser(newUser);
+                
+                user.senha = undefined;
 
-            await userData.updatelastLogin(user, now);
-            
-            let data = await userJson(user, now);
+                await userData.updatelastLogin(user, now);
+                
+                let data = await userJson(user, now);
 
-            await userData.updateToken(data);
+                await userData.updateToken(data);
 
-            res.status(200).send(data);
-
+                res.status(200).send(data);
+            }
         }catch(error){
             return res.status(400).send({error:"Falha ao registrar"})
         }
 
     },
 
-    //Logar usuario
+    //User login 
     async userLogin(req, res) {
         const {email, senha} = req.body;
         const password = true;
+        
+        if(!email || !senha)
+            return res.status(400).send({error: 'parametros não informados'}); 
 
         let user = await userData.findUser({email}, password);
 
@@ -59,12 +63,19 @@ module.exports = {
 
     },
 
-    // Buscar usuario por id e comparar token
+    // Search User
     async searchUser(req, res) {
         let userId = req.body.user_id;
+
+        if(!userId)
+            return res.status(400).send({error: 'parametros não informados'});
+
         let userToken = await encoded.tokenencoded(req, res);
         let dataUser = await userData.findUserById(userId)
 
+        if(!dataUser)
+            return res.status(401).send({error: 'Não autorizado'});
+            
         userToken = userToken.toString();
         dataUser.token = dataUser.token.toString();
 
@@ -73,38 +84,38 @@ module.exports = {
         if(!verifyToken)
             return res.status(401).send({error: 'Não autorizado'});
 
-            let data = await userJson(dataUser, false, true);   
+        let data = await userJson(dataUser, false, true);   
 
         res.status(200).send(data);
     }
 
 };
 
-//Preparar json do usuario para envio
-function userJson(dataUser, now, search){
-    
-    let user;
-    if(!search){
+    //User Json 
+    function userJson(dataUser, now, search){
+        
+        let user;
+        if(!search){
 
-        user = {
-            "id":dataUser._id, 
-            "usuario":dataUser.nome, 
-            "dataCriacao": dataUser.data_criacao, 
-            "ultimoLogin": now, 
-            "dataAtualizacao": dataUser.data_atualizacao
-        };
+            user = {
+                "id":dataUser._id, 
+                "usuario":dataUser.nome, 
+                "dataCriacao": dataUser.data_criacao, 
+                "ultimoLogin": now, 
+                "dataAtualizacao": dataUser.data_atualizacao
+            };
 
-        return {user, "token": token.tokenGenerator({id:user.id})}
+            return {user, "token": token.tokenGenerator({id:user.id})}
 
-    }else{
-        user = {
-            "id":dataUser._id, 
-            "usuario":dataUser.nome, 
-            "dataCriacao": dataUser.data_criacao, 
-            "ultimoLogin": dataUser.ultimo_login, 
-            "dataAtualizacao": dataUser.data_atualizacao
-        };
-        return {user, "token":dataUser.token};
-    }
+        }else{
+            user = {
+                "id":dataUser._id, 
+                "usuario":dataUser.nome, 
+                "dataCriacao": dataUser.data_criacao, 
+                "ultimoLogin": dataUser.ultimo_login, 
+                "dataAtualizacao": dataUser.data_atualizacao
+            };
+            return {user, "token":dataUser.token};
+        }
     
 }
