@@ -1,3 +1,8 @@
 {
-    "presets": ["@babel/preset-env"]
+    "presets": ["babel-preset-env", {
+        "targets": {
+            "node":"v12.4.0",
+            "npm":"6.9.0"
+        }
+    }]
 }
