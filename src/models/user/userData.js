@@ -10,7 +10,7 @@ module.exports = {
     },
 
     //Buscar usuário por email
-    async findUser(email, password){
+    async findUser(email, password, id){
         if(!password){
             const result = await User.findOne(email).exec();
             return result;
@@ -18,6 +18,13 @@ module.exports = {
             const result = await User.findOne(email).select('+senha');
             return result;
         }
+    },
+
+       //Buscar usuário por ID
+       async findUserById(id){
+        if(id)
+            return User.findOne({_id:id});
+        
     },
 
     //Atualizar ultima data de login

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.use(authMiddleWare);
 
-router.post("/searchuser", async (req, res) => {
+router.post("/searchuser", (req, res) => {
     userMethods.searchUser(req, res);
     
 });

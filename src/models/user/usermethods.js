@@ -53,7 +53,11 @@ module.exports = {
     },
 
     async searchUser(req, res) {
-    
+        
+        let user = await userData.findUserById(req.userId)
+        let result = await userJson(user, null, true);
+
+        res.status(200).send(result);
     }
 
 };
@@ -61,14 +65,30 @@ module.exports = {
 
 
 //Preparar json do usuario para envio
-function userJson(user, now){
-    user = {
-        "id":user._id, 
-        "usuario":user.nome, 
-        "dataCriacao": user.data_criacao, 
-        "ultimoLogin": now, 
-        "dataAtualizacao": user.data_atualizacao
-    };
+function userJson(dataUser, now, search){
+    
+    let user;
+    if(!search){
 
-    return {user, "token": token.tokenGenerator({id:user.id})}
+        user = {
+            "id":user._id, 
+            "usuario":user.nome, 
+            "dataCriacao": user.data_criacao, 
+            "ultimoLogin": now, 
+            "dataAtualizacao": user.data_atualizacao
+        };
+
+        return {user, "token": token.tokenGenerator({id:user.id})}
+
+    }else{
+        user = {
+            "id":dataUser._id, 
+            "usuario":dataUser.nome, 
+            "dataCriacao": dataUser.data_criacao, 
+            "ultimoLogin": dataUser.ultimo_login, 
+            "dataAtualizacao": dataUser.data_atualizacao
+        };
+        return user;
+    }
+    
 }
