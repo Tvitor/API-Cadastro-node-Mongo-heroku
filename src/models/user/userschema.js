@@ -1,4 +1,4 @@
-import mongoose from "../../database/index";
+const mongoose = require("../../database/index");
 
 const bcrypt = require('bcryptjs');
 
