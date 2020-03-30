@@ -23,6 +23,10 @@
     "nodemon": "^1.18.11"
   },
   "dependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv-safe": "^8.2.0",
