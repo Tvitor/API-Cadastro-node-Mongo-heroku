@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 const moment = require("moment");
 
-const token = require("../tokenGenerator");
-const userData = require("../user/userData");
+const token = require("../tokengenerator");
+const userData = require("./userdata");
 const encoded = require("../../models/encoded");
 
 const now = moment(moment().format('YYYY-MM-DD hh:mm:ss')).toDate();

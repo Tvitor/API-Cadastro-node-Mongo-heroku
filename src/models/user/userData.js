@@ -1,6 +1,6 @@
 // Methods to database
 const assert = require("assert");
-const User = require("../user/userschema");
+const User = require("./userschema");
 
 module.exports = {
     

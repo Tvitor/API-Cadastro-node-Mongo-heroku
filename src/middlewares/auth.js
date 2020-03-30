@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const dataUser = require("../models/user/userData");
+const dataUser = require("../models/user/userdata");
 const moment = require("moment");
 const now = new Date(); // today
 const env = require("../config/auth.json");
