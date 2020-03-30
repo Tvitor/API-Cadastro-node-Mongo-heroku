@@ -1,6 +1,6 @@
 const express = require("express");
-const userMethods = require("../models/user/usermethods.js");
 const router = express.Router();
+const userMethods = require("../models/user/usermethods.js");
 
 router.post('/register',  (req, res)=> {
     userMethods.userRegister(req, res)
