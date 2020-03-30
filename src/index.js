@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-require('dotenv-safe').config();
+
 const PORT = process.env.PORT || 3000;
 
 const app = express()
