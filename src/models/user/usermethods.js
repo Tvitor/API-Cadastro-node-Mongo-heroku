@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const moment = require("moment");
 
-const token = require("../tokengenerator");
+const token = require("../tokenGenerator");
 const userData = require("../user/userData");
 const encoded = require("../../models/encoded");
 
