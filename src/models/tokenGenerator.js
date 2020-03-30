@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-
+const env = require("../config/auth.json");
 module.exports = {
     //Create Token
     tokenGenerator(params) {
-        return jwt.sign(params, process.env.SECRET, {expiresIn: 86400});
+        return jwt.sign(params, env.secret, {expiresIn: 86400});
     }
 }

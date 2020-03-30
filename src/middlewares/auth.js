@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const dataUser = require("../models/user/userData");
 const moment = require("moment");
 const now = new Date(); // today
-
+const env = require("../config/auth.json");
 module.exports = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if(!authHeader)
@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
     if(!regex)
     return res.status(401).send({error: 'Não autorizado'});
 
-    jwt.verify(token, process.env.SECRET, async (err, decoded) => {
+    jwt.verify(token, env.secret, async (err, decoded) => {
         if(err) return res.status(401).send({error: 'Não autorizado'});
         
         dataUser.findUserById(decoded.id).then(function(resultUser){
