@@ -36,7 +36,10 @@ const UserSchema = new Schema({
             numero: String,
             ddd: String,
             _id: false
-        }]
+        }],
+        token: {
+            type:String
+        }
 })
 
 UserSchema.pre('save', async function(next) {

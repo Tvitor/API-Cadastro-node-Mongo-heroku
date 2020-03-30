@@ -28,16 +28,22 @@ module.exports = {
     },
 
     //Atualizar ultima data de login
-    updatelastLogin(userParams, now) {
-        
-           User.findOneAndUpdate({ultimo_login:userParams.ultimo_login},{ultimo_login:now}).then( () =>{
-                    User.findOne({_id:userParams._id}).then((result) => {
+    updatelastLogin(data, now) {
+           User.findOneAndUpdate({ultimo_login:data.ultimo_login},{ultimo_login:now}).then( () =>{
+                    User.findOne({_id:data._id}).then((result) => {
                         assert(result.ultimo_login , now);
                         return;
                     })
                     
             });
         
+    },
+    updateToken(data){
+        User.updateOne(
+            { _id: data.user.id },
+            { $set: { token: data.token}},{upsert:true}).then((result, err) => {
+               return 
+           })
     }
 
 }

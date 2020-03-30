@@ -17,8 +17,7 @@ module.exports = (req, res, next) => {
     let regex = /^Bearer$/i.test(scheme);
     if(!regex)
     return res.status(401).send({error: 'Não autorizado'});
-    
-    
+
     jwt.verify(token, process.env.SECRET, async (err, decoded) => {
         if(err) return res.status(401).send({error: 'Não autorizado'});
         

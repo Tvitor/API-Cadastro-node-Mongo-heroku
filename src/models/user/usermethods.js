@@ -3,6 +3,7 @@ const moment = require("moment");
 
 const token = require("../tokengenerator");
 const userData = require("../user/userData");
+const encoded = require("../../models/encoded");
 
 const now = moment(moment().format('YYYY-MM-DD hh:mm:ss')).toDate();
 
@@ -23,9 +24,12 @@ module.exports = {
             user.senha = undefined;
 
             await userData.updatelastLogin(user, now);
+            
+            let data = await userJson(user, now);
 
-            let result = await userJson(user, now);
-            res.status(200).send(result);
+            await userData.updateToken(data);
+
+            res.status(200).send(data);
 
         }catch(error){
             return res.status(400).send({error:"Falha ao registrar"})
@@ -47,22 +51,34 @@ module.exports = {
 
         await userData.updatelastLogin(user, now);
             
-        let result = await userJson(user, now);
-        res.status(200).send(result);
+        let data = await userJson(user, now);
+
+        await userData.updateToken(data);
+
+        res.status(200).send(data);
 
     },
 
+    // Buscar usuario por id e comparar token
     async searchUser(req, res) {
-        
-        let user = await userData.findUserById(req.userId)
-        let result = await userJson(user, null, true);
+        let userId = req.body.user_id;
+        let userToken = await encoded.tokenencoded(req, res);
+        let dataUser = await userData.findUserById(userId)
 
-        res.status(200).send(result);
+        userToken = userToken.toString();
+        dataUser.token = dataUser.token.toString();
+
+        let verifyToken = userToken === dataUser.token ? true : false;
+        
+        if(!verifyToken)
+            return res.status(401).send({error: 'Não autorizado'});
+
+            let data = await userJson(dataUser, false, true);   
+
+        res.status(200).send(data);
     }
 
 };
-
-
 
 //Preparar json do usuario para envio
 function userJson(dataUser, now, search){
@@ -71,11 +87,11 @@ function userJson(dataUser, now, search){
     if(!search){
 
         user = {
-            "id":user._id, 
-            "usuario":user.nome, 
-            "dataCriacao": user.data_criacao, 
+            "id":dataUser._id, 
+            "usuario":dataUser.nome, 
+            "dataCriacao": dataUser.data_criacao, 
             "ultimoLogin": now, 
-            "dataAtualizacao": user.data_atualizacao
+            "dataAtualizacao": dataUser.data_atualizacao
         };
 
         return {user, "token": token.tokenGenerator({id:user.id})}
@@ -88,7 +104,7 @@ function userJson(dataUser, now, search){
             "ultimoLogin": dataUser.ultimo_login, 
             "dataAtualizacao": dataUser.data_atualizacao
         };
-        return user;
+        return {user, "token":dataUser.token};
     }
     
 }
