@@ -9,4 +9,4 @@ app.use(bodyParser.urlencoded({ extended: false}));
 
 require('../src/controllers/usercontroller')(app);
 
-app.listen(PORT);
+app.listen(PORT, () =>{console.log(`Our app is running on port ${ PORT }`);});
