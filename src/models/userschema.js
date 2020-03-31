@@ -1,4 +1,4 @@
-const mongoose = require("../../database/index");
+const mongoose = require("../../config/mongo");
 
 const bcrypt = require('bcryptjs');
 

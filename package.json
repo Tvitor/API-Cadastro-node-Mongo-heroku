@@ -1,7 +1,7 @@
 {
   "name": "cadastro-login",
   "version": "1.0.0",
-  "description": "",
+  "description": "user register api",
   "main": "index.js",
   "engines": {
     "node": "v12.4.0",
@@ -9,11 +9,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec node src/index.js",
-    "build": "node src/index.js"
+    "start": "nodemon --exec node config/index.js",
+    "build": "node config/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vitor Sales",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.4.3",

@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const userMethods = require("../models/user/usermethods.js");
+const userMethods = require("../models/user.js");
 
+router.post("/searchuser", (req, res) => {
+    userMethods.loginUserFind(req, res);
+    
+});
 
 router.post('/register',  (req, res)=> {
     userMethods.userRegister(req, res)

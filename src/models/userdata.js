@@ -22,7 +22,7 @@ module.exports = {
     },
 
        //Find User by id
-       async findUserById(id){
+        findUserById(id){
         
             return User.findOne({_id:id});
         
@@ -38,15 +38,6 @@ module.exports = {
                     
             });
         
-    },
-
-    //Change token
-    updateToken(data){
-        User.updateOne(
-            { _id: data.user.id },
-            { $set: { token: data.token}},{upsert:true}).then((result, err) => {
-               return 
-           })
     }
 
 }
