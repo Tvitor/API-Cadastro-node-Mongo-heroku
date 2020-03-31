@@ -21,12 +21,14 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "dotenv-safe": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.9.6",
     "mongoose-guid": "^1.0.31",
+    "ngrok": "^3.2.7",
     "nodemon": "^1.18.11"
   }
 }
