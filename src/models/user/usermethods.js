@@ -65,8 +65,7 @@ module.exports = {
 
     // Search User
     async searchUser(req, res) {
-        let userId = req.body.user_id;
-
+        let userId = req.query.user_id;
         if(!userId)
             return res.status(400).send({error: 'parametros não informados'});
 
