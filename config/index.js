@@ -8,7 +8,8 @@ if(process.env.PORT !== 'production'){
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
-require('../src/controllers/usercontroller')(app);
+app.get('/', (req, res)=> res.send('hello'))
+// require('../src/controllers/usercontroller')(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>{console.log(`Our app is running on port ${ PORT }`);});
