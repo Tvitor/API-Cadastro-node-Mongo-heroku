@@ -76,8 +76,7 @@ module.exports = {
 
     // Search User
     async loginUserFind(req, res) {
-        resultToken = await tokenMethods.tokenVerify(req, res)
-        
+        resultToken = req.resultToken;
         let userId = req.query.user_id;
         if(!userId)
         return res.status(400).send({error: 'Não autorizado'});

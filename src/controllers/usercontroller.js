@@ -10,11 +10,5 @@ router.get('/login',  (req, res)=> {
     userMethods.userLogin(req, res)
 
 });
-router.get("/searchuser", (req, res) => {
-    userMethods.loginUserFind(req, res);
-    
-});
-
-
 
 module.exports = app => app.use('/user', router);
