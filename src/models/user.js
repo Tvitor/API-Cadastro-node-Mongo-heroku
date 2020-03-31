@@ -10,7 +10,6 @@ module.exports = {
     async userRegister(req, res) {
         const{email} = req.body;
         
-        res.status(200).send({error: "E-mail já existente"});
             if(email){
                 if(await usermethods.findUser({email}))
                     return res.status(400).send({error: "E-mail já existente"});
@@ -52,7 +51,6 @@ module.exports = {
 
     //User login 
     async userLogin(req, res) {
-        res.status(200).send({error: "E-mail já existente"});
         const {email, senha} = req.body;
         const password = true;
         
@@ -78,7 +76,6 @@ module.exports = {
 
     // Search User
     async loginUserFind(req, res) {
-        res.status(200).send({error: "E-mail já existente"});
         resultToken = await tokenMethods.tokenVerify(req, res)
         
         let userId = req.query.user_id;

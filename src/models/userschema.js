@@ -1,53 +1,53 @@
-// const mongoose = require("../../config/mongo");
+const mongoose = require("../../config/mongo");
 
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
-// const Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-// const UserSchema = new Schema({
+const UserSchema = new Schema({
 
-//         nome: {
-//             type: String,
-//             require:true
-//         },
+        nome: {
+            type: String,
+            require:true
+        },
 
-//         email: {
-//             type: String,
-//             unique: true,
-//             required:true,
-//             lowercase: true,
-//         },
-//         senha: {
-//             type: String,
-//             required:true,
-//             select: false
-//         },
-//         data_criacao: {
-//             type: Date
+        email: {
+            type: String,
+            unique: true,
+            required:true,
+            lowercase: true,
+        },
+        senha: {
+            type: String,
+            required:true,
+            select: false
+        },
+        data_criacao: {
+            type: Date
             
-//         },
-//         ultimo_login:{
-//             type: Date
-//         },
-//         data_atualizacao:{
-//             type:Date
-//         },
-//         telefones:[{
-//             numero: String,
-//             ddd: String,
-//             _id: false
-//         }],
-//         token: {
-//             type:String
-//         }
-// })
+        },
+        ultimo_login:{
+            type: Date
+        },
+        data_atualizacao:{
+            type:Date
+        },
+        telefones:[{
+            numero: String,
+            ddd: String,
+            _id: false
+        }],
+        token: {
+            type:String
+        }
+})
 
-// UserSchema.pre('save', async function(next) {
-//     const hash = await bcrypt.hash(this.senha, 10);
-//     this.senha = hash;
+UserSchema.pre('save', async function(next) {
+    const hash = await bcrypt.hash(this.senha, 10);
+    this.senha = hash;
 
-//     next();
-// })
+    next();
+})
 
-// const User = mongoose.model('Users', UserSchema);
-// module.exports = User;
+const User = mongoose.model('Users', UserSchema);
+module.exports = User;

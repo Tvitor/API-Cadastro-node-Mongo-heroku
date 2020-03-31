@@ -2,19 +2,19 @@ const express = require("express");
 const router = express.Router();
 const userMethods = require("../models/user.js");
 
-router.post("/searchuser", (req, res) => {
-    userMethods.loginUserFind(req, res);
-    
-});
-
 router.post('/register',  (req, res)=> {
     userMethods.userRegister(req, res)
     
 });
-
-router.post('/login',  (req, res)=> {
+router.get('/login',  (req, res)=> {
     userMethods.userLogin(req, res)
 
 });
+router.get("/searchuser", (req, res) => {
+    userMethods.loginUserFind(req, res);
+    
+});
+
+
 
 module.exports = app => app.use('/user', router);
