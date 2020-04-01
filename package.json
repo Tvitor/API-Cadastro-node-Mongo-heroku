@@ -9,13 +9,13 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm install nodemon node index.js",
-    "build": "node index.js",
-    "deploy": "gh-pages -d build"
+    "pre": "nodemon  node index.js",
+    "start": "node index.js",
+    "build": "node index.js"
   },
   "keywords": [],
   "author": "Vitor Sales",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "nodemon": "^1.18.11"
   },
