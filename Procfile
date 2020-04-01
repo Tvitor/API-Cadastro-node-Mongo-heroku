@@ -1,1 +1,1 @@
-web: PORT=$PORT node config/index.js
+web: node index.js
