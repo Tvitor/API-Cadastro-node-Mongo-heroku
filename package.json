@@ -10,8 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pre": "nodemon  node index.js",
-    "start": "npm install && node index.js",
-    "build": "npm install && node index.js"
+    "start": "nodemon node index.js",
+    "build": "node index.js"
   },
   "keywords": [],
   "author": "Vitor Sales",
