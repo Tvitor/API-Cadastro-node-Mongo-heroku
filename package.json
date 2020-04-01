@@ -29,7 +29,6 @@
     "moment": "^2.24.0",
     "mongoose": "^5.9.6",
     "mongoose-guid": "^1.0.31",
-    "ngrok": "^3.2.7",
     "nodemon": "^1.18.11"
   }
 }

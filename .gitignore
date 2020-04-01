@@ -1,6 +1,6 @@
 package-lock.json
 yarn.lock
 .env
-
+yarn-error
 # Dependency directories
 node_modules/
